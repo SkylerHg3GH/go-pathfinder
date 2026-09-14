@@ -1,6 +1,6 @@
-# go-pathfinder — v1.1
+# go-pathfinder
 
-A* pathfinding bot for [Minescript](https://minescript.net/) (v5.0). Walks, mines, follows, wanders, digs down, and pillars up.
+A* pathfinding bot for [Minescript](https://minescript.net/) 
 
 No mods, no Java library. Pure Python on the standard Minescript API (`get_block_region` / `getblock`, `player_position`, `player_look_at`).
 
@@ -116,24 +116,6 @@ minescript/
     cache/            # per-world terrain tile caches
     debug/            # #debug dumps
 ```
-
-## Tips
-
-- If `#mine` says "check the exact ID", look at the "Blocks touching you" line — use that exact `minecraft:...` ID.
-- If the bot bounces off a wall-hanging sign, fence, or stair: that's intended — they're solid and must be mined or walked around, not stepped through.
-- Stale terrain after someone else edits the world? The cache invalidates mined/placed blocks automatically; delete `minescript/pf/cache/` to force a full rescan.
-- `#settings set weight 1.0` for shortest paths, higher (e.g. `1.5`) for faster searches on long trips.
-
-## Troubleshooting
-
-| Symptom | Fix |
-|---|---|
-| `A task is already running` | `#stop`, or `#settings set allow_queueing_tasks true` to queue |
-| `No ... found nearby` | Increase search area / move closer; `#wander` to load terrain |
-| `Not enough blocks to pillar` | Put a placeable stack (dirt/cobble) in hotbar (slots 1–9) |
-| `No blockitems entry for Minecraft X` | Delete `minescript/pf/blockitems.json` and retry (re-fetches list) |
-| Bot walks past the goal | `#settings set waypoint_tolerance 1.0` or enable `precise_landing` |
-| Task crashed | See `minescript/pf/debug/` dump (`#debug` makes one on demand) |
 
 1.1 <br>
 *this readme is ai generated im so sorry*
