@@ -2,8 +2,6 @@
 
 A* pathfinding bot for [Minescript](https://minescript.net/) 
 
-No mods, no Java library. Pure Python on the standard Minescript API (`get_block_region` / `getblock`, `player_position`, `player_look_at`).
-
 ## Requirements
 
 - Minecraft: Java Edition
@@ -94,16 +92,6 @@ Stored per-install in `minescript/pf/pf_pref.json`. Edit in-game:
 | `passable_block_substrings` | `[]` | Extra substrings treated as walk-through |
 
 List setters take comma lists: `#settings set avoid_mining chest,furnace`. Add/remove take one value at a time.
-
-## How it works
-
-- **Weighted A\*** over walkable blocks (air + headroom + solid floor). Diagonal moves allowed, corner-cutting blocked. Single-block step-ups auto-jump; fences/walls (1.5 m), slab-on-solid 1.5 m stacks, and deep falls are rejected.
-- **Lazy terrain**: reads tiles via `get_block_region()` only where the search frontier goes, plus a per-world disk cache (`minescript/pf/cache/<address+spawn>.tilecache`) with spawn-fingerprint validation so map rotations don't poison each other.
-- **Mining fallback**: unbreakable (`bedrock`, `barrier`, portals, ...), liquids, and `avoid_mining` blocks are never mined. Everything else can be mined through at `mine_penalty` cost. `#mine X` discounts `X` so the bot actively tunnels toward it.
-- **Movement**: simulates `forward` / `jump` / `sprint` + full 3D `player_look_at` aim. Releases all keys on `#stop` / error so the bot never gets stuck holding W.
-- **Placement**: `#pillar` / stuck-climbing uses the biggest placeable hotbar stack (checked against per-version `blockitems.json`), looks straight down, jump + `use`, then invalidates the terrain cache for the new block.
-- **Long trips**: goals far on the longest axis are split into staged legs instead of one giant search.
-- **Safety**: `#down` refuses lava/fire/magma below and falls beyond `max_fall_distance`. `#pillar` refuses up front if the hotbar can't cover the full height.
 
 ## Files
 
